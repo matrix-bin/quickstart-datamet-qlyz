@@ -46,7 +46,7 @@
 资源准备<br />除上一步实例规格中所需的 ECS、数据盘、网络等配置，云资源依赖交换机、安全组及相应规则<br />![img_1.png](img_1.png)
 
 ## 二、获取部署链接
-您可以在阿里云的计算巢中通过MAPPIC关键字进行搜索，也可以单击 [部署链接](https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&ServiceId=service-eaf86b94527145059d27) 快速体验。<br />如果链接显示没有权限，点击诊断查看所需添加的权限策略。
+您可以在阿里云的计算巢中通过"数擎全量预置"关键字进行搜索，也可以单击 [部署链接](https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&ServiceId=service-eaf86b94527145059d27) 快速体验。<br />如果链接显示没有权限，点击诊断查看所需添加的权限策略。
 
 
 ## 三、创建服务实例
