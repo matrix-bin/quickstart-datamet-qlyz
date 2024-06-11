@@ -95,6 +95,51 @@ ECS 配置（CU、内存选型，建议ecs.r7.4xlarge 规格， 配置不低于�
 
 进入服务器，查看配置，按接口说明文档，验证接口连通性和数据结果。<br />![13.webp](images%2F13.webp)
 
+## 数据同步
+此时，上一步查看的是预置的demo数据，后续您需要联系数擎的商务或技术同学，开始OSS到您服务本地的数据同步，并开通服务调用的quota。
+步骤如下：
+### OSS数据复制开启
+OSS数据复制介绍参考：[OSS跨账号跨区域复制](https://help.aliyun.com/zh/oss/user-guide/cross-account-cross-region-replication)
+这里，用户作为数据复制目标方，按如下步骤操作：
+使用如下授权角色ARN:acs:ram::1444820317377909:role/admin-oss-temp
+登录OSS控制台，选择具体bucket，权限控制->Bucket授权策略->接收复制对象，本步配置同意数擎OSS数据同步到您的OSS，本步骤双方无额外费用。
+![16.webp](images%2F16.webp)
+![17.webp](images%2F17.webp)
+点击生成后如下：
+![18.webp](images%2F18.webp)
+
+### OSS到本地数据同步
+使用服务内置脚本（依赖OSSUtil工具），脚本位于/data/datax路径下。
+OSSUtil配置方式如下（软件安装位于/data路径下）：
+./ossutil64 config
+oss bucket及路径：oss://data-met/bucket_name/
+endpoint：https://cn-region_name.oss.aliyuncs.com
+ak：xxxxx
+sk：xxxxx
+(ak、sk需要在OSS控制台获取具备OSS读写权限的RAM账号的ak、sk)。
+
+脚本配置如下：
+涉及文件：
+umeng_feature.json
+umeng_feature_job.sh
+umeng_idmapping_temp.json
+umeng_idmapping_job.sh
+分别修改umeng_feature.json、umeng_idmapping_temp.json中的parameter->endpoint、accessId、accessKey、bucket、object参数。
+endpoint：从您的OSS bucket控制台获取，注意是内网域名，配置错误会影响下载速度且产生额外费用：
+![20.png](images%2F20.png)
+bucket：bucket name。
+object参数：umeng_feature.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；
+umeng_idmapping_temp.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；注意customer_name需要替换为约定好的客户名称简写。
+
+此时，在cd /data/datax/路径下，执行如下脚本
+sudo chmod 755 umeng_idmapping_job.sh
+sudo chmod 755 umeng_feature_job.sh
+sudo nohup ./umeng_idmapping_job.sh >log.txt 2>&1 &
+sudo nohup ./umeng_feature_job.sh >log2.txt 2>&1 &
+关注相关日志log.txt、log2.txt的执行情况。
+
+
+
 
 ## 计费说明
 按查询 id 去重计费。
