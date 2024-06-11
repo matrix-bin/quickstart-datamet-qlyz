@@ -100,6 +100,7 @@ ECS 配置（CU、内存选型，建议ecs.r7.4xlarge 规格， 配置不低于�
 步骤如下：
 ### OSS数据复制开启
 OSS数据复制介绍参考：[OSS跨账号跨区域复制](https://help.aliyun.com/zh/oss/user-guide/cross-account-cross-region-replication)
+
 这里，用户作为数据复制目标方，按如下步骤操作：
 使用如下授权角色ARN:acs:ram::1444820317377909:role/admin-oss-temp
 登录OSS控制台，选择具体bucket，权限控制->Bucket授权策略->接收复制对象，本步配置同意数擎OSS数据同步到您的OSS，本步骤双方无额外费用。
@@ -109,37 +110,36 @@ OSS数据复制介绍参考：[OSS跨账号跨区域复制](https://help.aliyun.
 ![18.webp](images%2F18.webp)
 
 ### OSS到本地数据同步
-使用服务内置脚本（依赖OSSUtil工具），脚本位于/data/datax路径下。
-OSSUtil配置方式如下（软件安装位于/data路径下）：
-./ossutil64 config
-oss bucket及路径：oss://data-met/bucket_name/
-endpoint：https://cn-region_name.oss.aliyuncs.com
-ak：xxxxx
-sk：xxxxx
-(ak、sk需要在OSS控制台获取具备OSS读写权限的RAM账号的ak、sk)。
+使用服务内置脚本（依赖OSSUtil工具），脚本位于/data/datax路径下。<br />OSSUtil配置方式如下（软件安装位于/data路径下）：<br />
+执行 ./ossutil64 config <br />
+oss bucket及路径：oss://data-met/bucket_name/<br />
+endpoint：https://cn-region_name.oss.aliyuncs.com<br />
+ak：xxxxx<br />
+sk：xxxxx<br />
+(ak、sk需要在OSS控制台获取具备OSS读写权限的RAM账号的ak、sk)
 
-脚本配置如下：
-涉及文件：
-umeng_feature.json
-umeng_feature_job.sh
-umeng_idmapping_temp.json
-umeng_idmapping_job.sh
-分别修改umeng_feature.json、umeng_idmapping_temp.json中的parameter->endpoint、accessId、accessKey、bucket、object参数。
-endpoint：从您的OSS bucket控制台获取，注意是内网域名，配置错误会影响下载速度且产生额外费用：
-![20.png](images%2F20.png)
-bucket：bucket name。
-object参数：umeng_feature.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；
+脚本配置如下：<br />
+涉及文件：<br />
+umeng_feature.json<br />
+umeng_feature_job.sh<br />
+umeng_idmapping_temp.json<br />
+umeng_idmapping_job.sh<br />
+分别修改umeng_feature.json、umeng_idmapping_temp.json中的parameter->endpoint、accessId、accessKey、bucket、object参数。<br />
+**endpoint**：从您的OSS bucket控制台获取，注意是内网域名，配置错误会影响下载速度且产生额外费用：
+![20.png](images%2F20.png)<br />
+**bucket**：bucket name。<br />
+**object参数**：umeng_feature.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；
 umeng_idmapping_temp.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；注意customer_name需要替换为约定好的客户名称简写。
 
-此时，在cd /data/datax/路径下，执行如下脚本
-sudo chmod 755 umeng_idmapping_job.sh
-sudo chmod 755 umeng_feature_job.sh
-sudo nohup ./umeng_idmapping_job.sh >log.txt 2>&1 &
-sudo nohup ./umeng_feature_job.sh >log2.txt 2>&1 &
+此时，在cd /data/datax/路径下，执行如下脚本<br />
+sudo chmod 755 umeng_idmapping_job.sh<br />
+sudo chmod 755 umeng_feature_job.sh<br />
+sudo nohup ./umeng_idmapping_job.sh >log.txt 2>&1 &<br />
+sudo nohup ./umeng_feature_job.sh >log2.txt 2>&1 &<br />
 关注相关日志log.txt、log2.txt的执行情况。
 
 
 
 
 ## 计费说明
-按查询 id 去重计费。
+按查询 id 去重计费。<br />
