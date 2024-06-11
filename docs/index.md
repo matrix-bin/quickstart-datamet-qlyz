@@ -3,6 +3,9 @@
 ## 概述
 天域数擎是以友盟全域数据为基础，提供在线营销服务增强型产品，包括营销标签模型预测分、模型特征定制服务、实时营销增强API，助力企业业务增长。<br />全域标签增补：预置丰富的全域标签，覆盖基础属性、社会属性、地域分布、兴趣偏好等300+维度，在一方特征不足的情况下，友盟三方数据为企业存量用户补充全域特征，进行人群特征与偏好识别，助力企业用户画像洞察，精细化运营手段，充分满足业务需要。<br />本文介绍基于计算巢，部署阿里云私域的数擎全量预置数据服务，该服务将提供全域设备（idfa、oaid、手机号）的特征矩阵或兴趣分标签数据的查询功能。
 
+**使用计算巢服务部署简介和收益**：
+传统软件部署方式，需要服务商/软件供应商提供资源配置单，交由用户（或交付伙伴）手动创建资源、部署服务、配置服务，过程大量人工介入，依赖经验，比如涉及docker、postgres数据库等资源的创建和配置，应用软件的安装配置调试等。
+计算巢支持标准化的应用交付方式，服务商将应用发布为标准服务，在用户订阅服务后计算巢自动触发部署流程，部署期间，无需人工参与，解决传统模式下的交付和部署难题，且除了ECS等资源费用外，无需额外付费。
 
 ## 实例规格
 根据您购买的数据类型选择对应的 ECS 和数据盘配置，此外还需要您提供和 ECS 同 region 的 OSS bucket，用于中转传输数据到 ECS 本地服务数据库。
@@ -42,16 +45,24 @@
 | AliyunECSFullAccess | 管理云服务器服务（ECS）的权限 |
 | AliyunROSFullAccess | 管理资源编排服务（ROS）的权限 |
 | AliyunComputeNestUserFullAccess | 管理计算巢服务（ComputeNest）的用户侧权限 |
+| AliyunComputeNestFullAccess | 管理计算巢服务（ComputeNest）的权限 |
+| AliyunComputeNestSupplierFullAccess | 管理计算巢服务（ComputeNest）的权限 |
 
+部署架构<br />部署环节涉及到的云资源： ECS、数据盘、OSS、VPC、交换机、安全组及相应规则<br />![1.jpg](images%2F1.jpg)
 
-资源准备<br />除上一步实例规格中所需的 ECS、数据盘、网络等配置，云资源依赖交换机、安全组及相应规则<br />![img_1.png](img_1.png)
+OSS资源：通过线下方式提供和 ECS 同 region 的 OSS bucket（bucket name、endpoint、ak、sk）给到数擎工程同学。
 
 ### 二、获取部署链接
-您可以在阿里云的计算巢中通过"数擎全量预置"关键字进行搜索，也可以单击 [部署链接](https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&ServiceId=service-eaf86b94527145059d27) 快速体验。<br />如果链接显示没有权限，点击诊断查看所需添加的权限策略。
 
+方式一：
+通过商务渠道获取：如下部署链接 [部署链接](https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&ServiceId=service-eaf86b94527145059d27) 快速体验。<br />如果链接显示没有权限，点击诊断查看所需添加的权限策略。
+
+方式二：
+访问阿里云计算巢产品控制台，服务目录中通过"数擎全量预置"关键字进行搜索：
+![14.jpg](images%2F14.jpg)
 
 ### 三、创建服务实例
-进入部署链接后，开始您阿里云账号（UID）下的数擎计算巢服务所需资源配置：<br />服务实例命名、地域选择、付费类型选按量付费<br />![2.webp](images%2F2.webp)
+进入部署链接后，开始您阿里云账号（UID）下的数擎计算巢服务所需资源配置：<br />服务实例命名、地域选择、付费类型（ECS的付费类型），可选按量付费或包年包月。<br />![2.webp](images%2F2.webp)
 
 ECS 配置（CU、内存选型，建议ecs.r7.4xlarge 规格， 配置不低于该配置），实例密码为 ECS root 账号登录密码，密码勿丢失。可用区 、VPC、交换机等根据实际情况，选择您已存在的实例。<br />![3.webp](images%2F3.webp)
 
