@@ -136,7 +136,7 @@ umeng_idmapping_job.sh<br />
 ![20.png](images%2F20.png)<br />
 **bucket**：bucket name。<br />
 **object**：umeng_feature.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；
-umeng_idmapping_temp.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；注意customer_name需要替换为约定好的客户名称简写。
+umeng_idmapping_temp.json 对应 customer_name/youmeng/customer/1/user=customer_name/* ；注意customer_name需要替换为约定好的客户名称简写。
 
 此时，在cd /data/datax/路径下，执行如下脚本<br />
 sudo chmod 755 umeng_idmapping_job.sh<br />
