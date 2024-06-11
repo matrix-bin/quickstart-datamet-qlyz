@@ -3,7 +3,7 @@
 ## 概述
 天域数擎是以友盟全域数据为基础，提供在线营销服务增强型产品，包括营销标签模型预测分、模型特征定制服务、实时营销增强API，助力企业业务增长。<br />全域标签增补：预置丰富的全域标签，覆盖基础属性、社会属性、地域分布、兴趣偏好等300+维度，在一方特征不足的情况下，友盟三方数据为企业存量用户补充全域特征，进行人群特征与偏好识别，助力企业用户画像洞察，精细化运营手段，充分满足业务需要。<br />本文介绍基于计算巢，部署阿里云私域的数擎全量预置数据服务，该服务将提供全域设备（idfa、oaid、手机号）的特征矩阵或兴趣分标签数据的查询功能。
 
-**使用计算巢服务部署简介和收益**：
+**使用计算巢服务部署简介**：
 传统软件部署方式，需要服务商/软件供应商提供资源配置单，交由用户（或交付伙伴）手动创建资源、部署服务、配置服务，过程大量人工介入，依赖经验，比如涉及docker、postgres数据库等资源的创建和配置，应用软件的安装配置调试等。
 计算巢支持标准化的应用交付方式，服务商将应用发布为标准服务，在用户订阅服务后计算巢自动触发部署流程，部署期间，无需人工参与，解决传统模式下的交付和部署难题，且除了ECS等资源费用外，无需额外付费。
 
@@ -128,7 +128,7 @@ umeng_idmapping_job.sh<br />
 **endpoint**：从您的OSS bucket控制台获取，注意是内网域名，配置错误会影响下载速度且产生额外费用：
 ![20.png](images%2F20.png)<br />
 **bucket**：bucket name。<br />
-**object参数**：umeng_feature.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；
+**object**：umeng_feature.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；
 umeng_idmapping_temp.json 对应 customer_name/youmeng/customer/2/user=customer_name/* ；注意customer_name需要替换为约定好的客户名称简写。
 
 此时，在cd /data/datax/路径下，执行如下脚本<br />
