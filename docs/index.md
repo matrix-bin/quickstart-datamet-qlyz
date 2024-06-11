@@ -142,4 +142,4 @@ sudo nohup ./umeng_feature_job.sh >log2.txt 2>&1 &<br />
 
 
 ## 计费说明
-按查询 id 去重计费。详询数擎商务及产品答疑<br />
+按查询 id 去重计费。详询数擎商务及产品答疑。<br />
