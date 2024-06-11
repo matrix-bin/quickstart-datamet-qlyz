@@ -94,6 +94,13 @@ ECS 配置（CU、内存选型，建议ecs.r7.4xlarge 规格， 配置不低于�
 密码为创建服务实例时设置的。
 
 进入服务器，查看配置，按接口说明文档，验证接口连通性和数据结果。<br />![13.webp](images%2F13.webp)
+服务本地查询接口验证：<br />
+curl --location 'http://localhost:8001/api/getFeature' \
+--header 'Content-Type: application/json' \
+--data '
+{
+    "ids": ["a5ba3655f82aea6de4b7673c80xxxxxx"]
+}'
 
 ## 数据同步
 此时，上一步查看的是预置的demo数据，后续您需要联系数擎的商务或技术同学，开始OSS到您服务本地的数据同步，并开通服务调用的quota。
@@ -142,4 +149,19 @@ sudo nohup ./umeng_feature_job.sh >log2.txt 2>&1 &<br />
 
 
 ## 计费说明
-按查询 id 去重计费。详询数擎商务及产品答疑。<br />
+按查询 id 去重计费。以上步骤完成后，需人工开通调用quota量后使用服务，详询数擎商务及产品答疑。<br />
+可在服务本地查询开通quota量、已使用quota量查询：<br />
+curl --location --request POST 'http://localhost:8001/api/getQuotaInfo'
+
+开通流程：<br />
+登录本地数据库进行quota更新<br />
+docker exec -it postgres-rbm bash<br />
+psql<br />
+\c umeng_turbox_bitmap<br />
+UPDATE um_purchase_package set amount='quota' where id = 1;
+其中quota需要联系数擎商务后产品人员获取合同对应的quota值。
+
+更新后，重启应用容器：<br />
+docker stop datamet-private-deployment<br />
+docker start datamet-private-deployment <br />
+
